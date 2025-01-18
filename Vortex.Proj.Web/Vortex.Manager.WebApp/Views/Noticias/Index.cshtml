@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Vortex.Manager.Application.DTOs.Output.Noticias.TagsDTO>
+ @* <div class="noticia-context">
+     <div class="menu-lateral-noticia">
+        @foreach (var item in Model)
+        {
+            <btn id="@item.Id" >@Html.DisplayFor(modelItem => item.Descricao)</btn> 
+        }
+     </div>
+    <div class="body-noticia"> 
+        aqui vai conter todo o body da coisa
+    </div>
+</div> *@
+ 
+<div class="d-flex flex-row">
+    <div class="w-25">
+        @foreach (var item in Model)
+        {
+            <btn id="@item.Id">@Html.DisplayFor(modelItem => item.Descricao)</btn>
+            <br />
+        }
+    </div>
+    <div class="w-75 ">aqui vai conter todo o body da coisa</div>
+</div>

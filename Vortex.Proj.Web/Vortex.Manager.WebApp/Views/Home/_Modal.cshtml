@@ -1,0 +1,43 @@
+﻿<div class="modal fade" id="tagModal" tabindex="-1" aria-labelledby="tagModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tagModalLabel">Gerenciar Notícias</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-9"></div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-danger" id="addTagDisplay">Add Tag</button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="elementoTitulo" class="form-label">Título:</label>
+                    <input type="text" class="form-control" id="elementoTitulo" required>
+                </div>
+                <div class="mb-3">
+                    <label for="elementoDescricao" class="form-label">Descrição:</label>
+                    <textarea class="form-control" id="elementoDescricao" rows="3"></textarea> @* Campo de texto multilinha *@
+                </div>
+
+                <form id="tagForm" style="display:none">
+                    <hr>
+                    <div class="mb-3">
+                        <label for="tagName" class="form-label">Nome da Tag:</label>
+                        <input type="text" class="form-control" id="tagName" required>
+                    </div>
+                    <button type="button" class="btn btn-success" id="addTag">Adicionar Tag</button>
+                </form>
+
+                <hr>
+                <h3>Tags Cadastradas:</h3>
+                <div id="tagList">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveNoticia">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+</div>
