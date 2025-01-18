@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Vortex.Manager.Domain.Entity;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
 namespace Vortex.Manager.Application.DTOs.Input.Noticia
@@ -15,6 +13,6 @@ namespace Vortex.Manager.Application.DTOs.Input.Noticia
         [DisplayName("Descrição")]
         public required string Texto { get; set; }
 
-        public required List<int> TagId { get; set; } 
+        public required List<int> TagsId { get; set; } 
     }
 }

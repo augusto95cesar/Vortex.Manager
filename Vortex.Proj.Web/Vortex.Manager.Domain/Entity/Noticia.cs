@@ -11,11 +11,11 @@ namespace Vortex.Manager.Domain.Entity
         [MaxLength(250, ErrorMessage = "O campo Título pode ter no máximo 250 caracteres.")]
         public required string Titulo { get; set; }
         public required string Texto { get; set; }
-        public int UsuarioId { get; set; }
+        public required int UsuarioId { get; set; }
 
         //Relacionamento
-        [ForeignKey("UsuarioId")] 
-        public required virtual Usuario Usuario { get; set; }
-        public required virtual ICollection<NoticiaTag> NoticiaTag { get; set; }
+        [ForeignKey("UsuarioId")]
+        public virtual Usuario Usuario { get; set; }
+        public virtual ICollection<NoticiaTag> NoticiaTag { get; set; }
     }
 }

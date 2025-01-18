@@ -1,5 +1,4 @@
-﻿let tags = []; // Array para armazenar as tags (simulação de banco de dados)
-let resultTags = []
+﻿let tags = [];
 var app = {
     init: () => {
         this.app.getTags(app.atualizarListaTags)
@@ -9,9 +8,8 @@ var app = {
         $.ajax({
             url: '/Tags/Get',
             type: 'GET',
-            dataType: 'json', success: function (data) {
-                resultTags = data;
-                callback();
+            dataType: 'json', success: function (data) { 
+                callback(data);
             },
             error: function (error) {
                 console.error("Erro na requisição AJAX:", error);
@@ -19,8 +17,7 @@ var app = {
         });
     },
     creatTag: (tagName) => {
-        var tag = {
-            //descricao: $("#Descricao").val() 
+        var tag = { 
             descricao: tagName
         };
 
@@ -30,42 +27,37 @@ var app = {
             data: tag, // Dados a serem enviados
             dataType: 'json',
             success: function (data) {
-                app.getTags(app.atualizarListaTags);
-
-                //if (data.sucesso) {
-
-                //} else { 
-                //}
+                app.getTags(app.atualizarListaTags); 
             },
             error: function (error) {
                 console.error("Erro na requisição AJAX:", error);
             }
         });
-    }, creatNoticia: (tagsSelecionadas) => {
-        console.log("creatNoticia: ", tagsSelecionadas)
+    },
+    creatNoticia: (listTagsId) => {
+        var titulo = $("#modalTitulo").val();
+        var descricao = $("#modalDescricao").val(); 
 
-        //var tag = {
-        //    //descricao: $("#Descricao").val() 
-        //    descricao: tagName
-        //};
+        var noticias = {
+            titulo: titulo,
+            texto: descricao,
+            tagsid: listTagsId
+        }
 
-        //$.ajax({
-        //    url: '/Tags/Create', // URL da sua Action
-        //    type: 'POST',
-        //    data: tag, // Dados a serem enviados
-        //    dataType: 'json',
-        //    success: function (data) {
-        //        app.getTags(app.atualizarListaTags);
-
-        //        //if (data.sucesso) {
-
-        //        //} else { 
-        //        //}
-        //    },
-        //    error: function (error) {
-        //        console.error("Erro na requisição AJAX:", error);
-        //    }
-        //});
+        $.ajax({
+            url: '/Noticias/Create', // URL da sua Action
+            type: 'POST',
+            data: noticias, // Dados a serem enviados
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                app.fecharModal();
+                app.getTags(app.atualizarListaTags); 
+            },
+            error: function (error) {
+                console.error("Erro na requisição AJAX:", error);
+            }
+        });
     },
     modal: () => {
         $("#addTag").click(function () {
@@ -86,18 +78,18 @@ var app = {
             var tagsSelecionadas = [];
             $("#tagList input:checked").each(function () {
                 tagsSelecionadas.push($(this).val());
-            });
-
-            $("#tagModal").modal('hide');
+            }); 
             app.creatNoticia(tagsSelecionadas);  
         });
         $('#tagModal').on('shown.bs.modal', function () {
             app.getTags(app.atualizarListaTags);
         })
-    },
-    atualizarListaTags: () => {
-        $("#tagName").val("");
-        tags = resultTags.map(objeto => objeto.descricao);
+    },     
+    atualizarListaTags: (listTags) => {
+        $("#tagName").val(""); 
+        //tags = listTags.map(objeto => objeto.descricao);
+        tags = listTags; 
+        console.log(tags)
         $("#tagList").empty();
         if (tags.length === 0) {
             $("#tagList").append("<p>Nenhuma tag cadastrada.</p>");
@@ -105,16 +97,19 @@ var app = {
             tags.forEach(function (tag, index) {
                 $("#tagList").append(`
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="${tag}" id="tagCheck${index}">
+                                <input class="form-check-input" type="checkbox" value="${tag.codigo}" id="tagCheck${index}">
                                 <label class="form-check-label" for="tagCheck${index}">
-                                    ${tag}
+                                    ${tag.descricao}
                                 </label>
                             </div>
                         `);
             });
         }
-    }
-
+    },
+    fecharModal:() => {
+        $("#tagModal").modal('hide'); 
+    } 
 }
 
+//iniciar javascript
 app.init();

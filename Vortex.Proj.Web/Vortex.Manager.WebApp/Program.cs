@@ -1,9 +1,39 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Vortex.Manager.Application.DTOs.Input.Noticia;
+using Vortex.Manager.Application.DTOs.Input.Tag;
+using Vortex.Manager.Application.EventHandlers;
+using Vortex.Manager.Application.Interfaces;
+using Vortex.Manager.Application.Interfaces.Services;
+using Vortex.Manager.Application.Services;
+using Vortex.Manager.Domain.Entity;
 using Vortex.Manager.Infrastructure.Data.Context;
+using Vortex.Manager.Infrastructure.Data.Interfaces;
+using Vortex.Manager.Infrastructure.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddHttpContextAccessor();
+//***************     ***************     ***************     ***************//
+builder.Services.AddScoped<ITagsService, TagsService>();
+builder.Services.AddScoped<INoticiaService, NoticiaService>();
+builder.Services.AddScoped<INoticiaTagService, NoticiaTagService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+//***************     ***************     ***************     ***************//
+
+//***************     ***************     ***************     ***************//
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<INoticiaRepository, NoticiaRepository>();
+builder.Services.AddScoped<INoticiaTagRepository, NoticiaTagRepository>(); 
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+//***************     ***************     ***************     ***************//
+
+//***************     ***************     ***************     ***************//
+builder.Services.AddScoped<IHandler<CreateNoticiaDTO, Noticia>, NoticiasHandler>();
+builder.Services.AddScoped<IHandler<CreateTagDTO, Tag>, TagsHandler>();
+//***************     ***************     ***************     ***************//
 
 // Add services to the container.
 //builder.Services.AddControllersWithViews(); 

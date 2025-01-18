@@ -1,84 +1,40 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vortex.Manager.Application.DTOs.Output.Noticias;
+using Vortex.Manager.Application.DTOs.Input.Noticia;
+using Vortex.Manager.Application.Interfaces;
+using Vortex.Manager.Application.Interfaces.Services;
+using Vortex.Manager.Application.Mappers;
+using Vortex.Manager.Application.Services;
+using Vortex.Manager.Domain.Entity;
 
 namespace Vortex.Manager.WebApp.Controllers
 {
+    [Authorize]
     public class NoticiasController : Controller
     {
-        // GET: NoticiasController
-        public ActionResult Index()
+        private IHandler<CreateNoticiaDTO, Noticia> _handlerNoticias;
+        private INoticiaService _noticiaService;
+        private INoticiaTagService _noticiaTagService;
+
+        public NoticiasController(IHandler<CreateNoticiaDTO, Noticia> handlerNoticias, INoticiaService noticiaService, INoticiaTagService noticiaTagService)
         {
-            return View(new List<TagsDTO> { new TagsDTO { Id = 1, Descricao = "Tag 01" }, new TagsDTO { Descricao = "Tag 02", Id = 2 }});
+            _handlerNoticias = handlerNoticias;
+            _noticiaService = noticiaService;
+            _noticiaTagService = noticiaTagService;
         }
 
-        // GET: NoticiasController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: NoticiasController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: NoticiasController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(CreateNoticiaDTO dto)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            //Criar Noticia
+            var noticia = await _handlerNoticias.ExecutarAsync(dto);
+            noticia = await _noticiaService.AddAsync(noticia);
 
-        // GET: NoticiasController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+            //Relacionar com as Tags
+            var tagsNoticias = await noticia.Map(dto.TagsId);
+            await _noticiaTagService.AddAsync(tagsNoticias);
 
-        // POST: NoticiasController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: NoticiasController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: NoticiasController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return Ok();
         }
     }
 }

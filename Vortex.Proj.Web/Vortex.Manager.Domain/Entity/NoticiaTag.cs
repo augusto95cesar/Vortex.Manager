@@ -12,9 +12,9 @@ namespace Vortex.Manager.Domain.Entity
 
         //Relacionamento
         [ForeignKey("TagId")]
-        public required virtual Tag Tag { get; set; }
+        public virtual Tag Tag { get; set; }
 
         [ForeignKey("NoticiaId")]
-        public required virtual Noticia Noticia { get; set; }
+        public virtual Noticia Noticia { get; set; }
     }
 }

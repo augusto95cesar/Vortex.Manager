@@ -11,6 +11,6 @@ namespace Vortex.Manager.Domain.Entity
         public required string Descricao { get; set; }
 
         //Relacionamento
-        public required virtual ICollection<NoticiaTag> Noticias { get; set; } // Habilita o lazy loading
+        public virtual ICollection<NoticiaTag> Noticias { get; set; }
     }
 }
