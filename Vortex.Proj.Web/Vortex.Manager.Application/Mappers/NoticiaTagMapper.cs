@@ -4,14 +4,15 @@ namespace Vortex.Manager.Application.Mappers
 {
     public static class NoticiaTagMapper
     {
-        public static async Task<List<NoticiaTag>> Map(this Noticia noticia , List<int> tags)
+        public static async Task<List<NoticiaTag>> Map(this Noticia noticia, List<int> tags) => (await Task.Run(() =>
         {
-            return await Task.Run(() => {
-                var r =  new List<NoticiaTag>();
-                foreach (var tag in tags)
-                    r.Add(new NoticiaTag { NoticiaId = noticia.Id, TagId = tag });
-                return r;
-            });
-        }
+            var r = new List<NoticiaTag>();
+
+            foreach (var tag in tags)
+                r.Add(new NoticiaTag { NoticiaId = noticia.Id, TagId = tag });
+
+            return r;
+        }));
+
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Vortex.Manager.Application.DTOs.Input.Noticia;
+using Vortex.Manager.Application.DTOs.Output.Noticias;
 using Vortex.Manager.Application.Interfaces;
 using Vortex.Manager.Application.Interfaces.Services;
 using Vortex.Manager.Application.Mappers;
@@ -23,18 +25,28 @@ namespace Vortex.Manager.WebApp.Controllers
             _noticiaTagService = noticiaTagService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get() => Ok(await _noticiaService.GetAsync().Result.Map());
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateNoticiaDTO dto)
         {
-            //Criar Noticia
-            var noticia = await _handlerNoticias.ExecutarAsync(dto);
-            noticia = await _noticiaService.AddAsync(noticia);
+            try
+            {
+                //Criar Noticia
+                var noticia = await _handlerNoticias.ExecutarAsync(dto);
+                noticia = await _noticiaService.AddAsync(noticia);
 
-            //Relacionar com as Tags
-            var tagsNoticias = await noticia.Map(dto.TagsId);
-            await _noticiaTagService.AddAsync(tagsNoticias);
+                //Relacionar com as Tags
+                var tagsNoticias = await noticia.Map(dto.TagsId);
+                await _noticiaTagService.AddAsync(tagsNoticias);
 
-            return Ok();
+                return CreatedAtAction(null, await _noticiaService.GetAsync(noticia.Id).Result.Map());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
