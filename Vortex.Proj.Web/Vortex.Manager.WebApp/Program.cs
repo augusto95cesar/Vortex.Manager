@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Vortex.Manager.Application.DTOs.Input.Noticia;
 using Vortex.Manager.Application.DTOs.Input.Tag;
 using Vortex.Manager.Application.EventHandlers;
@@ -41,8 +42,14 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); // Adic
 
 
 // Configure o banco de dados SQLite
+//builder.Services.AddDbContext<VortextManagerContext>(options =>
+//    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddDbContext<VortextManagerContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"),  
+    //b => b.MigrationsAssembly("Vortex.Manager.Infrastructure")));
+    b => b.MigrationsAssembly("Vortex.Manager.WebApp")));
+
 
 
 //

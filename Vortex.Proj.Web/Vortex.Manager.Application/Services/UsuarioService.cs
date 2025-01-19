@@ -16,6 +16,12 @@ namespace Vortex.Manager.Application.Services
             _httpContextAccessor = httpContextAccessor;
             _usuarioRepository = usuarioRepository;
         }
+
+        public async Task<Usuario> AddAsync(Usuario user)
+        {
+            return await _usuarioRepository.AddAsync(user);
+        }
+
         public async Task<Usuario?> GetAsync(Usuario user)
         {
             return await _usuarioRepository.GetAsync(user);

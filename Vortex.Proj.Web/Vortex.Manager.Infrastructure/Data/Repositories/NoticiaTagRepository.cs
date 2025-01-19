@@ -16,11 +16,11 @@ namespace Vortex.Manager.Infrastructure.Data.Repositories
             _dbSet = context.Set<NoticiaTag>();
         }
 
-        public async Task<NoticiaTag> AddAsync(NoticiaTag entrada)
+        public async Task<NoticiaTag> AddAsync(NoticiaTag noticiaTag)
         {
-            await _dbSet.AddAsync(entrada);
+            await _dbSet.AddAsync(noticiaTag);
             await _context.SaveChangesAsync();
-            return entrada; 
+            return noticiaTag; 
         } 
     }
 }

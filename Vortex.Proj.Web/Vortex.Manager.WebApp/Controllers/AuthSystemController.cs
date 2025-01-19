@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Vortex.Manager.Application.DTOs.Input.Usuario;
 using Microsoft.AspNetCore.Authorization;
-using Vortex.Manager.Application.Interfaces.Services;
-using Vortex.Manager.Application.Services;
+using Vortex.Manager.Application.Interfaces.Services; 
 using Vortex.Manager.Domain.Entity;
 
 namespace Vortex.Manager.WebApp.Controllers
@@ -33,8 +32,8 @@ namespace Vortex.Manager.WebApp.Controllers
             {
                 await SignOutAsync();
 
-                Usuario? usuario = new Usuario { Id = 1, Email = dto.Email, Senha = dto.Password };
-                //usuario = await _usuarioSerivce.GetAsync(usuario);
+                Usuario? usuario = new Usuario { Email = dto.Email, Senha = dto.Password };
+                usuario = await _usuarioSerivce.GetAsync(usuario);
 
                 if (usuario != null)
                 {
@@ -49,15 +48,13 @@ namespace Vortex.Manager.WebApp.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
                     return RedirectToAction("Index", "Home");
-                }
-
-                ModelState.AddModelError("", "Credenciais inválidas.");
+                } 
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", ex.Message);
+                throw ex;
             }
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Logout()
@@ -71,25 +68,25 @@ namespace Vortex.Manager.WebApp.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
-        [Authorize]
+       [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
-        [Authorize]
-        // POST: AuthSystemController/Create
+        [Authorize] 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateUsuarioDTO dto)
+        public async Task<ActionResult> Create(CreateUsuarioDTO dto)
         {
             try
             {
+                await _usuarioSerivce.AddAsync(new Usuario { Email = dto.Email, Senha = dto.Email, Nome = dto.Nome });
                 return RedirectToAction("Index", "Home");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return RedirectToAction("Error", "Home");
             }
         }
     }

@@ -1,13 +1,21 @@
 ﻿using Vortex.Manager.Application.Interfaces.Services;
 using Vortex.Manager.Domain.Entity;
+using Vortex.Manager.Infrastructure.Data.Interfaces;
 
 namespace Vortex.Manager.Application.Services
 {
     public class NoticiaTagService : INoticiaTagService
     {
-        public Task AddAsync(List<NoticiaTag> entrada)
+        private INoticiaTagRepository _noticiaTagRepository;
+
+        public NoticiaTagService(INoticiaTagRepository noticiaTagRepository)
         {
-            throw new NotImplementedException();
+            _noticiaTagRepository = noticiaTagRepository;
+        }
+        public async Task AddAsync(List<NoticiaTag> noticiaTag)
+        {
+            foreach (var item in noticiaTag) 
+                await _noticiaTagRepository.AddAsync(item); 
         }
     }
 }
