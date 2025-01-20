@@ -83,8 +83,8 @@ var app = {
         var noticiaHtml = app.montarNoticiaHtml(noticia);
         $(`#noticiaId_${noticia.codigo}`).html(noticiaHtml)
     },
-    atualizarListaNoticias: (noticias) => {
-        if (noticias.length === 0) {
+    atualizarListaNoticias: (noticias) => {        
+        if (noticias.length === 0) { 
             $("#body-noticias").prepend("<p id='noticiaIgualAZero'>Nenhuma notícia cadastrada.</p>")
         } else {
             noticias.forEach(function (noticia) {
@@ -257,7 +257,9 @@ var app = {
             url: rota,
             type: 'DELETE',
             dataType: 'json', success: function (data) {
-                $('#noticiaId_' + idNoticia).remove()
+                $('#noticiaId_' + idNoticia).remove();
+                $("#body-noticias").html('')
+                app.getNoticias(app.atualizarListaNoticias);
             },
             error: function (error) {
                 console.log("Erro getNoticias:", error);
