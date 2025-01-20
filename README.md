@@ -49,7 +49,14 @@ será publicado a aplicação?
 3. copie todos os arquivos da pasta publish e leve para a pasta do site configurado no iis acima.
   
 ---
- 
+ ## Implantação simplificada
+  1. baixe o arquivo zip na pasta [downloads](https://github.com/augusto95cesar/Vortex.Manager/blob/master/Downloads/Vortex.Manager.WebApp.zip)
+  2. extrair aquivo na pasta do servidor.
+  3. configurar servidor para iis core.
+  4. o projeto usa o sqllite com entity **está com o banco local na pasta zip.**.
+        - caso queira usar outro banco de dados, basta configura o provider no lugar do sqlite no program.cs do projeto princiapal.
+        - o banco de dados foi criado execute a migration ef
+---
 ### Como Usar o Systema
 1. Passo 01***
 	- acessar o site configura no meu caso http://localhost 
