@@ -5,7 +5,7 @@ using Vortex.Manager.Domain.Entity;
 
 namespace Vortex.Manager.Application.EventHandlers
 {
-    public class NoticiasHandler : IHandler<CreateNoticiaDTO, Noticia>
+    public class NoticiasHandler : IHandler<RequestNoticiaDTO, Noticia>
     {
         private IUsuarioService _usuarioService;
 
@@ -13,13 +13,14 @@ namespace Vortex.Manager.Application.EventHandlers
         {
             _usuarioService = usuarioService;
         }
-        public async Task<Noticia> ExecutarAsync(CreateNoticiaDTO dto)
+        public async Task<Noticia> ExecutarAsync(RequestNoticiaDTO dto)
         {
             var usuario = await _usuarioService.GetUserLogado();
             return await Task.Run(() =>
             {
                 return new Noticia
                 {
+                    Id = dto.Id,
                     Titulo = dto.Titulo,
                     Texto = dto.Texto,
                     UsuarioId = usuario.Id

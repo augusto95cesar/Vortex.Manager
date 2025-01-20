@@ -20,7 +20,18 @@ namespace Vortex.Manager.Infrastructure.Data.Repositories
         {
             await _dbSet.AddAsync(noticiaTag);
             await _context.SaveChangesAsync();
-            return noticiaTag; 
-        } 
+            return noticiaTag;
+        }
+
+        public async Task RemoveAll(int noticiaId)
+        {
+            var tagsNoticias = await _dbSet.Where(p => p.NoticiaId == noticiaId).ToListAsync();
+
+            if (tagsNoticias.Count > 0)
+            {
+                _dbSet.RemoveRange(tagsNoticias);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

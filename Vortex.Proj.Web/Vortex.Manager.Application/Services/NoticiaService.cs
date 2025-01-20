@@ -43,5 +43,15 @@ namespace Vortex.Manager.Application.Services
         {
             return await _noticiaRepository.GetAsync(idNoticia);
         }
+
+        public async Task RemoveAsync(int idNoticia)
+        {
+            await _noticiaRepository.RemoveAsync(idNoticia);
+        }
+
+        public async Task<Noticia> UpdateAsync(Noticia entrada)
+        {
+            return await _noticiaRepository.UpdateAsync(entrada);
+        }
     }
 }

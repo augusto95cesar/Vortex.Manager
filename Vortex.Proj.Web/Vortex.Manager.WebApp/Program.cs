@@ -32,7 +32,7 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 //***************     ***************     ***************     ***************//
 
 //***************     ***************     ***************     ***************//
-builder.Services.AddScoped<IHandler<CreateNoticiaDTO, Noticia>, NoticiasHandler>();
+builder.Services.AddScoped<IHandler<RequestNoticiaDTO, Noticia>, NoticiasHandler>();
 builder.Services.AddScoped<IHandler<CreateTagDTO, Tag>, TagsHandler>();
 //***************     ***************     ***************     ***************//
 

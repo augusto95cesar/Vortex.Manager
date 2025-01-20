@@ -12,17 +12,18 @@
                         <button type="button" class="btn btn-danger" id="addTagDisplay">Add Tag</button>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="elementoTitulo" class="form-label">Título:</label>
-                    <input type="text" class="form-control" id="modalTitulo" required>
-                </div>
-                <div class="mb-3">
-                    <label for="elementoDescricao" class="form-label">Descrição:</label>
-                    <textarea class="form-control" id="modalDescricao" rows="3"></textarea> @* Campo de texto multilinha *@
+                <div id="tagFormBody">
+                    <div class="mb-3">
+                        <label for="elementoTitulo" class="form-label">Título:</label>
+                        <input type="text" class="form-control" id="modalTitulo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="elementoDescricao" class="form-label">Descrição:</label>
+                        <textarea class="form-control" id="modalDescricao" rows="3"></textarea> @* Campo de texto multilinha *@
+                    </div> 
                 </div>
 
                 <form id="tagForm" style="display:none">
-                    <hr>
                     <div class="mb-3">
                         <label for="tagName" class="form-label">Nome da Tag:</label>
                         <input type="text" class="form-control" id="tagName" required>
@@ -31,7 +32,7 @@
                 </form>
 
                 <hr>
-                <h3>Tags Cadastradas:</h3>
+                <h3>Tags:</h3>
                 <div id="tagList">
                 </div>
             </div>

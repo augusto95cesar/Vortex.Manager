@@ -17,5 +17,10 @@ namespace Vortex.Manager.Application.Services
             foreach (var item in noticiaTag) 
                 await _noticiaTagRepository.AddAsync(item); 
         }
+
+        public async Task RemoveAll(int noticiaId)
+        {
+            await _noticiaTagRepository.RemoveAll(noticiaId);
+        }
     }
 }

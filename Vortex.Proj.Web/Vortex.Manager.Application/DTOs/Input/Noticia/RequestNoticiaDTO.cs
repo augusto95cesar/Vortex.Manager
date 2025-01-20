@@ -3,8 +3,9 @@ using System.ComponentModel;
 
 namespace Vortex.Manager.Application.DTOs.Input.Noticia
 {
-    public class CreateNoticiaDTO
+    public class RequestNoticiaDTO
     {
+        public int Id { get; set; }
 
         [DisplayName("Título")]
         [MaxLength(250, ErrorMessage = "O campo Título pode ter no máximo 250 caracteres.")]

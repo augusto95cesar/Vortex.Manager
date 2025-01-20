@@ -38,7 +38,7 @@ namespace Vortex.Manager.Infrastructure.Data.Repositories
             return await _dbSet.Where(n => n.UsuarioId == idUser)
                                .Include(n => n.NoticiaTag) // Inclui a tabela intermediária
                                .ThenInclude(nt => nt.Tag)  // Inclui a tabela Tag
-                               .ToListAsync();  
+                               .ToListAsync();
         }
 
         /// <summary>
@@ -52,6 +52,25 @@ namespace Vortex.Manager.Infrastructure.Data.Repositories
                               .Include(n => n.NoticiaTag) // Inclui a tabela intermediária
                               .ThenInclude(nt => nt.Tag)  // Inclui a tabela Tag
                               .FirstOrDefaultAsync();
+        }
+
+        public async Task RemoveAsync(int noticiaId)
+        {
+            var tagsNoticias = await _dbSet.Where(p => p.Id == noticiaId).ToListAsync(); 
+            if (tagsNoticias.Count > 0)
+            {
+                _dbSet.RemoveRange(tagsNoticias);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Noticia> UpdateAsync(Noticia entrada)
+        {
+            Noticia existingNoticia = await _dbSet.FindAsync(entrada.Id);
+            _context.Entry(existingNoticia).CurrentValues.SetValues(entrada);
+            _context.Entry(existingNoticia).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return entrada;
         }
     }
 }
