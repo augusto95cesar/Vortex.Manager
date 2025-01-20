@@ -1,6 +1,7 @@
 ﻿using Vortex.Manager.Application.DTOs.Input.Noticia;
 using Vortex.Manager.Application.Interfaces;
 using Vortex.Manager.Application.Interfaces.Services;
+using Vortex.Manager.Application.Validations;
 using Vortex.Manager.Domain.Entity;
 
 namespace Vortex.Manager.Application.EventHandlers
@@ -15,6 +16,7 @@ namespace Vortex.Manager.Application.EventHandlers
         }
         public async Task<Noticia> ExecutarAsync(RequestNoticiaDTO dto)
         {
+            dto.Validation();
             var usuario = await _usuarioService.GetUserLogado();
             return await Task.Run(() =>
             {

@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using Vortex.Manager.Application.DTOs.Input.Noticia;
-using Vortex.Manager.Application.DTOs.Output.Noticias;
 using Vortex.Manager.Application.Interfaces;
 using Vortex.Manager.Application.Interfaces.Services;
 using Vortex.Manager.Application.Mappers;
-using Vortex.Manager.Application.Services;
 using Vortex.Manager.Domain.Entity;
 
 namespace Vortex.Manager.WebApp.Controllers
@@ -78,9 +75,16 @@ namespace Vortex.Manager.WebApp.Controllers
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _noticiaTagService.RemoveAll(id);
-            await _noticiaService.RemoveAsync(id);
-            return Ok(new {Id = id, Mensagem = "A Noticia Foi Excluida Com Sucesso!"});
+            try
+            { 
+                await _noticiaTagService.RemoveAll(id);
+                await _noticiaService.RemoveAsync(id);
+                return Ok(new { Id = id, Mensagem = "A Noticia Foi Excluida Com Sucesso!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message );
+            }
         }
     }
 }

@@ -21,8 +21,7 @@ var app = {
                 callback(data);
             },
             error: function (error) {
-                notification.addNotification(error, 'error')
-                //console.log("Erro getNoticias:", error);
+                notification.addNotification(error.responseText, 'error')
             }
         });
     },
@@ -101,8 +100,7 @@ var app = {
                 callback(data);
             },
             error: function (error) {
-                notification.addNotification(error, 'error')
-                //console.log("Erro getTags:", error);
+                notification.addNotification(error.responseText, 'error')
             }
         });
     },
@@ -123,8 +121,7 @@ var app = {
                 notification.addNotification('Taga Criada com Sucesso!', 'ok')
             },
             error: function (error) {
-                notification.addNotification('Erro ao Cadatrar Tagas', 'error')
-                //console.log("Erro na requisição AJAX:", error);
+                notification.addNotification(error.responseText, 'error')
             }
         });
     },
@@ -149,9 +146,8 @@ var app = {
                 app.fecharModal();
                 notification.addNotification('Noticía Criada com Sucesso!', 'ok')
             },
-            error: function (error) {
-                console.log("Erro creatNoticia:", error);
-                notification.addNotification('Erro ao Cadastrar Noticia', 'error')
+            error: function (error) {                 
+                notification.addNotification(error.responseText, 'error')
             }
         });
     },
@@ -177,8 +173,7 @@ var app = {
                 notification.addNotification('Notícia modificada com Sucesso!', 'ok')
             },
             error: function (error) {
-                //console.log("Erro creatNoticia:", error);
-                notification.addNotification(error, 'error')
+                notification.addNotification(error.responseText, 'error')
             }
         });
     },
@@ -271,8 +266,7 @@ var app = {
                 notification.addNotification('Notícia Excluida com Sucesso!', 'ok')
             },
             error: function (error) {
-                //console.log("Erro getNoticias:", error);
-                notification.addNotification(error, 'error')
+                notification.addNotification(error.responseText, 'error')
             }
         });
     }

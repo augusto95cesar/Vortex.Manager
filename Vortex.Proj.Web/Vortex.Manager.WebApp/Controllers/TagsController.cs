@@ -29,10 +29,17 @@ namespace Vortex.Manager.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateTagDTO dto)
         {
-            var tag = await _handlerTag.ExecutarAsync(dto);
-            tag = await _service.AddAsync(tag);
-            var result = await tag.Map();
-            return Ok(result);
+            try
+            {
+                var tag = await _handlerTag.ExecutarAsync(dto);
+                tag = await _service.AddAsync(tag);
+                var result = await tag.Map();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
