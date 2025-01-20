@@ -1,19 +1,53 @@
-﻿<link rel="stylesheet" href="~/css/noticia.tag.css" asp-append-version="true" />
+﻿<div class="body-container">
+    <!-- Cabeçalho -->
+    <header class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">Bem-vindo ao Manager Notícias</h1>
+                <p class="lead text-center">Gerencie suas notícias com eficiência e controle total.</p>
+            </div>
+        </div>
+    </header>
 
-<div class="row">
-    <div class="col-10"></div>
-    <div class="col-2">
-        @* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagModal"> *@
-        <button type="button" class="btn btn-primary" onclick="app.addNoticia()">
-            Adicionar Notícia
-        </button> 
-    </div>
+    <!-- Card de Ações -->
+    <section class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-4">
+                    <div class="card-header">Adicionar Usúario</div>
+                    <div class="card-body">
+                        <p>Insira novos usúarios ao sistema.</p>
+
+                        @if (ViewBag.Admin == true)
+                        {
+                            <a asp-action="create" asp-controller="AuthSystem" class="btn btn-light">Adicionar Usúarios</a>
+                        }
+                        else
+                        {
+                            <a onclick="notification.addNotification('Você não é Admin!', 'error')" class="btn btn-light">Adicionar Usúarios</a>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-4">
+                    <div class="card-header">Visualizar Notícia</div>
+                    <div class="card-body">
+                        <p>Consulte todas as notícia cadastradas.</p>
+                        <a class="btn btn-light" asp-area="" asp-controller="Home" asp-action="Noticias">Ver Notícias</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-warning mb-4">
+                    <div class="card-header">Gerenciar Tags </div>
+                    <div class="card-body">
+                        <p>Gerencie as tags do sistema. </p>
+                        <a class="btn btn-light" onclick="notification.addNotification('O Gerenciador de Tags, não etá pronto!', 'error')">Adicionar Usiários</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
- 
-<h3>Notícias</h3>
-<hr />
-
-<div id="body-noticias"> </div>
-
-@Html.Partial("_Modal");
-<script src="~/js/noticia.tag.js" asp-append-version="true"></script>

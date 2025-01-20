@@ -55,6 +55,7 @@ namespace Vortex.Manager.WebApp.Controllers
                 throw ex;
             }
             return RedirectToAction("Index", "Home");
+           
         }
 
         public async Task<IActionResult> Logout()
@@ -71,7 +72,10 @@ namespace Vortex.Manager.WebApp.Controllers
        [Authorize]
         public ActionResult Create()
         {
-            return View();
+            if (User.FindFirstValue(ClaimTypes.Email).Equals("master@gmail.com"))
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
         }
 
         [Authorize] 
@@ -81,7 +85,11 @@ namespace Vortex.Manager.WebApp.Controllers
         {
             try
             {
-                await _usuarioSerivce.AddAsync(new Usuario { Email = dto.Email, Senha = dto.Email, Nome = dto.Nome });
+                if (User.FindFirstValue(ClaimTypes.Email).Equals("master@gmail.com"))
+                { 
+                    await _usuarioSerivce.AddAsync(new Usuario { Email = dto.Email, Senha = dto.Email, Nome = dto.Nome });
+                }
+
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)

@@ -50,8 +50,8 @@ var app = {
                                    </div>
                                     <div class="col-2 engrenagem">
                                         <div class="row">
-                                            <div class="col-6"><img onclick="app.configurationNoticia(${noticia.codigo})" src="img/engrenagem.png" /></div>
-                                            <div class="col-6"><img onclick="app.excluirNoticia(${noticia.codigo})" src="img/excluir.png" /></div>
+                                            <div class="col-6"><img onclick="app.configurationNoticia(${noticia.codigo})" src="../img/engrenagem.png" /></div>
+                                            <div class="col-6"><img onclick="app.excluirNoticia(${noticia.codigo})" src="../img/excluir.png" /></div>
                                         </div>
                                     </div>
                                </div>

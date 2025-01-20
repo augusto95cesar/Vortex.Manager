@@ -1,0 +1,19 @@
+﻿<link rel="stylesheet" href="~/css/noticia.tag.css" asp-append-version="true" />
+
+<div class="row">
+    <div class="col-10"></div>
+    <div class="col-2">
+        @* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagModal"> *@
+        <button type="button" class="btn btn-primary" onclick="app.addNoticia()">
+            Adicionar Notícia
+        </button>  
+    </div>
+</div>
+ 
+<h3>Notícias</h3>
+<hr />
+
+<div id="body-noticias"> </div>
+
+@Html.Partial("_Modal");
+<script src="~/js/noticia.tag.js" asp-append-version="true"></script>
