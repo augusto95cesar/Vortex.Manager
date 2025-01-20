@@ -33,7 +33,7 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 //***************     ***************     ***************     ***************//
 builder.Services.AddScoped<IHandler<RequestNoticiaDTO, Noticia>, NoticiasHandler>();
-builder.Services.AddScoped<IHandler<CreateTagDTO, Tag>, TagsHandler>();
+builder.Services.AddScoped<IHandler<RequestTagDTO, Tag>, TagsHandler>();
 //***************     ***************     ***************     ***************//
 
 // Add services to the container.

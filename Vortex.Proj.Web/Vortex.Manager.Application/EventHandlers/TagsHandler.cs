@@ -4,13 +4,13 @@ using Vortex.Manager.Domain.Entity;
 
 namespace Vortex.Manager.Application.EventHandlers
 {
-    public class TagsHandler : IHandler<CreateTagDTO, Tag>
+    public class TagsHandler : IHandler<RequestTagDTO, Tag>
     {
-        public async Task<Tag> ExecutarAsync(CreateTagDTO entrada)
+        public async Task<Tag> ExecutarAsync(RequestTagDTO dto)
         {
             return await Task.Run(() =>
             {
-                var tag = new Tag { Descricao = entrada.Descricao };
+                var tag = new Tag { Id = dto.Codigo, Descricao = dto.Descricao };
                 return tag;
             });
         }

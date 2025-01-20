@@ -18,9 +18,13 @@ namespace Vortex.Manager.Application.Services
                 await _noticiaTagRepository.AddAsync(item); 
         }
 
-        public async Task RemoveAll(int noticiaId)
+        public async Task RemoveNoticiaAll(int noticiaId)
         {
-            await _noticiaTagRepository.RemoveAll(noticiaId);
+            await _noticiaTagRepository.RemoveNoticiaAll(noticiaId);
+        }
+        public async Task RemoveTagAll(int noticiaId)
+        {
+            await _noticiaTagRepository.RemoveTagAll(noticiaId);
         }
     }
 }

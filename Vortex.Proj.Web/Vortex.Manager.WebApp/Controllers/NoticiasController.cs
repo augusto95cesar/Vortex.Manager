@@ -61,7 +61,7 @@ namespace Vortex.Manager.WebApp.Controllers
 
                 //Relacionar com as Tags
                 var tagsNoticias = await noticia.Map(dto.TagsId);
-                await _noticiaTagService.RemoveAll(noticia.Id);
+                await _noticiaTagService.RemoveNoticiaAll(noticia.Id);
                 await _noticiaTagService.AddAsync(tagsNoticias);
 
                 return Ok(await _noticiaService.GetAsync(dto.Id).Result.Map());
@@ -77,7 +77,7 @@ namespace Vortex.Manager.WebApp.Controllers
         {
             try
             { 
-                await _noticiaTagService.RemoveAll(id);
+                await _noticiaTagService.RemoveNoticiaAll(id);
                 await _noticiaService.RemoveAsync(id);
                 return Ok(new { Id = id, Mensagem = "A Noticia Foi Excluida Com Sucesso!" });
             }

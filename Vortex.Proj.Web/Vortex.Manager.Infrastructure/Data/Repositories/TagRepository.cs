@@ -24,13 +24,32 @@ namespace Vortex.Manager.Infrastructure.Data.Repositories
         }
 
         public async Task<List<Tag>> GetALLAsync()
-        { 
+        {
             return await _dbSet.ToListAsync();
         }
 
         public async Task<List<Tag>> GetAsync(List<int> entrada)
         {
             return await _dbSet.Where(p => entrada.Contains(p.Id)).ToListAsync();
-        } 
+        }
+
+        public async Task RemoveAsync(int idTag)
+        {
+            var tags = await _dbSet.Where(p => p.Id == idTag).ToListAsync();
+            if (tags.Count > 0)
+            {
+                _dbSet.RemoveRange(tags);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Tag> UpdateAsync(Tag tag)
+        {
+            Tag findTag = await _dbSet.FindAsync(tag.Id);
+            _context.Entry(findTag).CurrentValues.SetValues(tag);
+            _context.Entry(findTag).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return tag;
+        }
     }
 }

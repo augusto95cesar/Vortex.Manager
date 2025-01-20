@@ -66,9 +66,9 @@ namespace Vortex.Manager.Infrastructure.Data.Repositories
 
         public async Task<Noticia> UpdateAsync(Noticia entrada)
         {
-            Noticia existingNoticia = await _dbSet.FindAsync(entrada.Id);
-            _context.Entry(existingNoticia).CurrentValues.SetValues(entrada);
-            _context.Entry(existingNoticia).State = EntityState.Modified;
+            Noticia findNoticia = await _dbSet.FindAsync(entrada.Id);
+            _context.Entry(findNoticia).CurrentValues.SetValues(entrada);
+            _context.Entry(findNoticia).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return entrada;
         }

@@ -12,19 +12,25 @@ namespace Vortex.Manager.Application.Services
         {
             _repository = repository;
         }
-
-        public async Task<Tag> AddAsync(Tag entrada)
-        {
-           return await _repository.AddAsync(entrada);
-        } 
+        
         public async Task<List<Tag>> GetALLAsync()
         {
             return await _repository.GetALLAsync();
         }
 
-        public Task<List<Tag>> GetAsync(List<int> entrada)
+        public async Task<Tag> AddAsync(Tag entrada)
         {
-            throw new NotImplementedException();
+            return await _repository.AddAsync(entrada);
+        }
+
+        public async Task<Tag> UpdateAsync(Tag entrada)
+        {
+            return await _repository.UpdateAsync(entrada);
+        }
+
+        public async Task RemoveAsync(int idTag)
+        {
+            await _repository.RemoveAsync(idTag);
         }
     }
 }

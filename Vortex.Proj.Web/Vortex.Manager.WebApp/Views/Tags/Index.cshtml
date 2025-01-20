@@ -1,0 +1,172 @@
+﻿@model IEnumerable<Vortex.Manager.Application.DTOs.Output.Tag.TagsDTO>
+
+<div class="row">
+    <div class="col-10"></div>
+    <div class="col-2">
+        @* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagModal"> *@
+        <button type="button" class="btn btn-primary" onclick="tapp.addNoticia()">
+            Adicionar Tag
+        </button>
+    </div>
+</div>
+
+@if (Model.Count() == 0)
+{
+    <h4>Nenhuma Tag cadastrada.</h4>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Codigo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descricao)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Codigo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-6"><img onclick="tapp.editNoticia(@item.Codigo, '@item.Descricao')" src="../img/engrenagem.png" /></div>
+                            <div class="col-6"><img onclick="tapp.delete(@item.Codigo)" src="../img/excluir.png" /></div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+<div class="modal fade" id="tagModal" tabindex="-1" aria-labelledby="tagModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tagModalLabel">Gerenciar Tags:</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <form id="tagForm">
+                <div class="mb-3">
+                    <label for="tagName" class="form-label">Nome da Tag:</label>
+                    <input type="text" class="form-control" id="tagName" required>
+                </div>
+                <div class="mb-3">
+                    <button onclick="tapp.salvar()" type="button" class="btn btn-primary">
+                        Salvar Alterações
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    form#tagForm {
+        padding: 20px;
+    }
+
+    div > img {
+        height: 20px;
+    }
+
+        div > img:hover {
+            cursor: pointer;
+        }
+</style>
+<script>
+    var tAcaoSalvar = 0;
+    var tapp = {
+        editNoticia: (codigo, descricao) => {
+            tAcaoSalvar = codigo;
+            $("#tagName").val(descricao);
+            $("#tagModal").modal('show');
+        },
+        addNoticia: () => {
+            tAcaoSalvar = 0;
+            $("#tagModal").modal('show');
+        },
+        salvar: () => {
+            if (tAcaoSalvar === 0) {
+                tapp.create()
+            } else {
+                tapp.edit();
+            }
+        },
+        create: () => {
+            var tag = {
+                descricao: $('#tagName').val()
+            };
+
+            $.ajax({
+                url: '/Tags/Create', // URL da sua Action
+                type: 'POST',
+                data: tag, // Dados a serem enviados
+                dataType: 'json',
+                success: function (data) {
+                    notification.addNotification('Taga Criada com Sucesso!', 'ok');
+                    $("#tagModal").modal('hide');
+                    setTimeout(function () {
+                        location.reload();
+                    }, 5000); // 5000 milissegundos = 5 segundos
+                },
+                error: function (error) {
+                    notification.addNotification(error.responseText, 'error')
+                }
+            });
+        },
+        edit: () => {
+            var tag = {
+                codigo: tAcaoSalvar,
+                descricao: $('#tagName').val()
+            };
+
+            $.ajax({
+                url: '/Tags/Put', // URL da sua Action
+                type: 'PUT',
+                data: tag, // Dados a serem enviados
+                dataType: 'json',
+                success: function (data) {
+                    notification.addNotification('Tag Editada com Sucesso!', 'ok');
+                    $("#tagModal").modal('hide');
+                    setTimeout(function () {
+                        location.reload();
+                    }, 5000); // 5000 milissegundos = 5 segundos
+                },
+                error: function (error) {
+                    notification.addNotification(error.responseText, 'error')
+                }
+            });
+        } ,
+        delete: (codigo) => {
+            var rota = '/Tags/Delete/' + codigo
+            $.ajax({
+                url: rota,
+                type: 'DELETE',
+                dataType: 'json', success: function (data) {
+                    notification.addNotification('Tag Removida com Sucesso!', 'ok')
+                    setTimeout(function () {
+                        location.reload();
+                    }, 5000); // 5000 milissegundos = 5 segundos
+                },
+                error: function (error) {
+                    notification.addNotification(error.responseText, 'error')
+                }
+            });
+        }
+    }
+
+</script>

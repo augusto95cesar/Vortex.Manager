@@ -23,9 +23,20 @@ namespace Vortex.Manager.Infrastructure.Data.Repositories
             return noticiaTag;
         }
 
-        public async Task RemoveAll(int noticiaId)
+        public async Task RemoveNoticiaAll(int noticiaId)
         {
             var tagsNoticias = await _dbSet.Where(p => p.NoticiaId == noticiaId).ToListAsync();
+
+            if (tagsNoticias.Count > 0)
+            {
+                _dbSet.RemoveRange(tagsNoticias);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveTagAll(int tagId)
+        {
+            var tagsNoticias = await _dbSet.Where(p => p.TagId == tagId).ToListAsync();
 
             if (tagsNoticias.Count > 0)
             {
