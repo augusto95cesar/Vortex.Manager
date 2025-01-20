@@ -21,7 +21,8 @@ var app = {
                 callback(data);
             },
             error: function (error) {
-                console.log("Erro getNoticias:", error);
+                notification.addNotification(error, 'error')
+                //console.log("Erro getNoticias:", error);
             }
         });
     },
@@ -100,7 +101,8 @@ var app = {
                 callback(data);
             },
             error: function (error) {
-                console.log("Erro getTags:", error);
+                notification.addNotification(error, 'error')
+                //console.log("Erro getTags:", error);
             }
         });
     },
@@ -118,9 +120,11 @@ var app = {
                 $("#tagForm").css("display", "none");
                 $("#tagFormBody").css("display", "block");
                 app.getTags(app.atualizarListaTags);
+                notification.addNotification('Taga Criada com Sucesso!', 'ok')
             },
             error: function (error) {
-                console.log("Erro na requisição AJAX:", error);
+                notification.addNotification('Erro ao Cadatrar Tagas', 'error')
+                //console.log("Erro na requisição AJAX:", error);
             }
         });
     },
@@ -143,9 +147,11 @@ var app = {
                 //console.log("teste de info",data)
                 app.atualizarListaNoticias(data);
                 app.fecharModal();
+                notification.addNotification('Noticía Criada com Sucesso!', 'ok')
             },
             error: function (error) {
                 console.log("Erro creatNoticia:", error);
+                notification.addNotification('Erro ao Cadastrar Noticia', 'error')
             }
         });
     },
@@ -168,9 +174,11 @@ var app = {
             success: function (data) {
                 app.updateNoticiaHtml(data);
                 app.fecharModal();
+                notification.addNotification('Notícia modificada com Sucesso!', 'ok')
             },
             error: function (error) {
-                console.log("Erro creatNoticia:", error);
+                //console.log("Erro creatNoticia:", error);
+                notification.addNotification(error, 'error')
             }
         });
     },
@@ -260,9 +268,11 @@ var app = {
                 $('#noticiaId_' + idNoticia).remove();
                 $("#body-noticias").html('')
                 app.getNoticias(app.atualizarListaNoticias);
+                notification.addNotification('Notícia Excluida com Sucesso!', 'ok')
             },
             error: function (error) {
-                console.log("Erro getNoticias:", error);
+                //console.log("Erro getNoticias:", error);
+                notification.addNotification(error, 'error')
             }
         });
     }

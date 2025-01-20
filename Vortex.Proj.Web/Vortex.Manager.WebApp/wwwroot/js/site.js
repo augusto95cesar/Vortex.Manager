@@ -1,4 +1,26 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿var notification = {
+    addNotification : (mensagem, type) => {
 
-// Write your JavaScript code.
+        //console.log(mensagem)
+        //console.log(type) 
+
+        $("#notificacao-erro").html('')
+        $("#notificacao-erro").html(`${mensagem}`)
+        $("#notificacao-erro").css("background", "rgb(217 0 0 / 84%)");
+
+        if (type === 'ok') {
+            $("#notificacao-erro").css("background", "#26e50d");
+        }
+
+        // Com botão de fechar:
+        $("#notificacao-erro").append('<span id="fechar-erro" style="float:right; cursor:pointer;">&times;</span>');
+        $("#fechar-erro").click(function () {
+            $("#notificacao-erro").fadeOut();
+        });
+
+        $("#notificacao-erro").fadeIn();
+        setTimeout(function () {
+            $("#notificacao-erro").fadeOut();
+        }, 5000); // 5000 milissegundos = 5 segundos 
+    }
+}
